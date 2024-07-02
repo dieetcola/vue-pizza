@@ -41,9 +41,17 @@ watch(search, (value, prevValue) => {
   <div class="pizzas-view--container">
     <h1>Pizzas</h1>
     <input v-model="search" placeholder="Search for a pizza" />
+
     <ul>
       <li v-for="pizza in searchResults" :key="pizza.id">
-        <PizzaCard :pizza="pizza" />
+        <router-link
+          :to="{
+            name: 'pizza',
+            params: { id: pizza.id },
+          }"
+        >
+          <PizzaCard :pizza="pizza" />
+        </router-link>
       </li>
     </ul>
   </div>
