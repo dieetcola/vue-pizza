@@ -1,5 +1,12 @@
+<script lang="ts" setup>
+import { usePizzas } from "../composables/usePizzas.ts";
+
+const { pizzas } = usePizzas();
+console.log(pizzas);
+</script>
+
 <template>
   <div>1</div>
 </template>
-<script lang="ts" setup></script>
+
 <style lang=""></style>
