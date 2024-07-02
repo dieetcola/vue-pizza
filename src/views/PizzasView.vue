@@ -7,6 +7,15 @@ import { useSearch } from "../composables/useSearch";
 import type { Pizza } from "../types/Pizza.ts";
 import { watch, type Ref, onUpdated} from "vue";
 
+// from routes
+const props = defineProps({
+  searchTerm: {
+    type: String,
+    required: false,
+    default: ""
+  }
+})
+
 const { pizzas } = usePizzas();
 const router = useRouter();
 const route = useRoute();
@@ -18,7 +27,8 @@ type PizzaSearch = {
 
 const { search, searchResults }: PizzaSearch = useSearch({
   items: pizzas,
-  defaultSearch: route.query?.search as string,
+  // defaultSearch: route.query?.search as string,
+  defaultSearch: props.searchTerm
 });
 
 watch(search, (value, prevValue) => {
