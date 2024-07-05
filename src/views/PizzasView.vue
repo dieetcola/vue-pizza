@@ -5,7 +5,14 @@ import PizzaCard from "../components/PizzaCard.vue";
 import { usePizzas } from "../composables/usePizzas.ts";
 import { useSearch } from "../composables/useSearch";
 import type { Pizza } from "../types/Pizza.ts";
-import { watch, type Ref, onUpdated} from "vue";
+import { watch, type Ref} from "vue";
+
+import { usePizzasStore } from "../stores/pizzas";
+import { storeToRefs } from "pinia";
+
+// const pizzasStore = usePizzasStore();
+// // const { pizzas } = storeToRefs(pizzasStore);
+// const { fetchPizzas } = pizzasStore;
 
 // from routes
 const props = defineProps({
@@ -16,9 +23,15 @@ const props = defineProps({
   }
 })
 
-const { pizzas } = usePizzas();
+const pizzasStore = usePizzasStore();
+pizzasStore.fetchPizzas();
+const { pizzas } = storeToRefs(pizzasStore);
+console.log(pizzas)
+
+// const { pizzas } = usePizzas();
 const router = useRouter();
 const route = useRoute();
+const pizzaId = route.query?.id;
 
 type PizzaSearch = {
   search: Ref<string>;
@@ -40,21 +53,22 @@ watch(search, (value, prevValue) => {
 <template>
   <div class="pizzas-view--container">
     <h1>Pizzas</h1>
+    <p v-if="pizzaId">Pizza ID: {{ pizzaId }}</p>
     <input v-model="search" placeholder="Search for a pizza" />
-
-    <ul>
-      <li v-for="pizza in searchResults" :key="pizza.id">
-        <router-link
-          :to="{
-            name: 'pizza',
-            params: { id: pizza.id },
-          }"
-        >
-          <PizzaCard :pizza="pizza" />
-        </router-link>
-      </li>
-    </ul>
   </div>
+
+  <ul>
+    <li v-for="pizza in searchResults" :key="pizza.id">
+      <router-link
+        :to="{
+          name: 'pizza',
+          params: { id: pizza.id },
+        }"
+      >
+        <PizzaCard :pizza="pizza" />
+      </router-link>
+    </li>
+  </ul>
 </template>
 
 <style scoped>
@@ -65,6 +79,7 @@ ul {
   gap: 1rem;
   flex-wrap: wrap;
   justify-content: center;
+  margin-top: 2rem;
 }
 
 .pizzas-view--container {

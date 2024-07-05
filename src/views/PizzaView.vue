@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { usePizzas } from "@/composables/usePizzas";
+import { usePizzas } from "../composables/usePizzas";
 
 const props = defineProps({
   id: {

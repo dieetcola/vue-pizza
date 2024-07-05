@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Pizza } from "@/types/Pizza";
+import type { Pizza } from "../types/Pizza";
 import type { PropType } from "vue";
 
 const props = defineProps({
@@ -9,6 +9,7 @@ const props = defineProps({
   },
 });
 </script>
+console.log(props)
 
 <template>
   <article class="pizza--details-wrapper">
