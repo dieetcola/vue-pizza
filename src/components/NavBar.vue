@@ -1,3 +1,7 @@
+<script setup>
+import Cart from "./Cart.vue";
+</script>
+
 <template>
   <nav>
     <router-link :to="{ name: 'home' }">Home</router-link>
@@ -6,6 +10,7 @@
     <router-link :to="{ name: 'contact' }">Contact</router-link>
     <router-link :to="{ name: 'login' }">Login</router-link>
   </nav>
+  <!-- <Cart /> -->
 </template>
 
 <style scoped>
