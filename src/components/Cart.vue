@@ -1,12 +1,33 @@
 <script setup lang="ts">
 import { useCartStore } from '../stores/cart'
+import { ref } from 'vue'
 
 const cart = useCartStore()
+const showCartDetails = ref(false)
+
+const toggleCartDetails = () => {
+  showCartDetails.value = !showCartDetails.value
+}
 </script>
 
 <template>
   <div class="cart">
-    <span class="cart__total">Cart: {{ cart.total }}</span>
+    <span class="cart__total" @click="toggleCartDetails">Cart: {{ cart.total }}</span>
+    <div class="cart__list" v-show="showCartDetails">
+      <div v-if="cart.total === 0">No items in cart</div>
+      <div v-else>
+        <ul>
+          <li v-for="(item, index) in cart.detailedItems" :key="item.id" class="cart__list-item">
+            <span>{{ index + 1 }}. {{ item.title }}</span>
+            <span>${{ item.price }}</span> x
+            <span>{{ item.quantity }}</span>
+            <span>= ${{ item.total }}</span>
+            <button @click="cart.remove(item.id)">Remove</button>
+          </li>
+        </ul>
+        <button @click="cart.clear()">Remove all</button>
+      </div>
+    </div>
   </div>
 </template>
 

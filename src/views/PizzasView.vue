@@ -81,6 +81,7 @@ ul {
 
 .pizzas-view--container {
   display: flex;
+  margin-top: 7rem;
   flex-direction: column;
   gap: 1rem;
   justify-content: center;

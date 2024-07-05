@@ -28,7 +28,6 @@ const isInCart = computed((): boolean => {
     <p>{{ pizza.title }}</p>
     <p>{{ pizza.description }}</p>
     <div class="pizza--inventory">
-      <!-- <div class="pizza--inventory-stock">Stock: {{ pizza.quantity || 0 }}</div> -->
       <div class="pizza--inventory-price">$ {{ pizza.price }}</div>
       <span v-if="isInCart">In cart</span>
     </div>
