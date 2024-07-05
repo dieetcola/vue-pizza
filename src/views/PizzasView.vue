@@ -1,53 +1,50 @@
 <script lang="ts" setup>
-import { useRoute, useRouter } from "vue-router";
+import { watch, type Ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 
-import PizzaCard from "../components/PizzaCard.vue";
-import { usePizzas } from "../composables/usePizzas.ts";
-import { useSearch } from "../composables/useSearch";
-import type { Pizza } from "../types/Pizza.ts";
-import { watch, type Ref} from "vue";
+import PizzaCard from '../components/PizzaCard.vue'
+import { usePizzas } from '../composables/usePizzas.ts'
+import { useSearch } from '../composables/useSearch'
+import type { Pizza } from '../types/Pizza.ts'
+import { usePizzasStore } from '../stores/pizzas'
 
-import { usePizzasStore } from "../stores/pizzas";
-import { storeToRefs } from "pinia";
-
-// const pizzasStore = usePizzasStore();
-// // const { pizzas } = storeToRefs(pizzasStore);
-// const { fetchPizzas } = pizzasStore;
-
+const pizzasStore = usePizzasStore()
+const { pizzas } = storeToRefs(pizzasStore)
+const { fetchPizzas } = pizzasStore
 // from routes
 const props = defineProps({
   searchTerm: {
     type: String,
     required: false,
-    default: ""
+    default: ''
   }
 })
 
-const pizzasStore = usePizzasStore();
-pizzasStore.fetchPizzas();
-const { pizzas } = storeToRefs(pizzasStore);
-console.log(pizzas)
-
 // const { pizzas } = usePizzas();
-const router = useRouter();
-const route = useRoute();
-const pizzaId = route.query?.id;
+const router = useRouter()
+const route = useRoute()
+const pizzaId = route.query?.id
 
 type PizzaSearch = {
-  search: Ref<string>;
-  searchResults: Ref<Pizza[]>;
-};
+  search: Ref<string>
+  searchResults: Ref<Pizza[]>
+}
 
 const { search, searchResults }: PizzaSearch = useSearch({
   items: pizzas,
   // defaultSearch: route.query?.search as string,
   defaultSearch: props.searchTerm
-});
+})
 
 watch(search, (value, prevValue) => {
-  if (value === prevValue) return;
-  router.replace({ query: { search: value } });
-});
+  if (value === prevValue) return
+  router.replace({ query: { search: value } })
+})
+
+onMounted(() => {
+  fetchPizzas()
+})
 </script>
 
 <template>
@@ -62,7 +59,7 @@ watch(search, (value, prevValue) => {
       <router-link
         :to="{
           name: 'pizza',
-          params: { id: pizza.id },
+          params: { id: pizza.id }
         }"
       >
         <PizzaCard :pizza="pizza" />

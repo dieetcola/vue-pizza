@@ -1,13 +1,12 @@
 import { defineStore } from 'pinia'
 import { reactive, computed } from 'vue'
 
-interface CartItem {
+type CartItem = {
   id: string
   quantity: number
 }
 
 export const useCartStore = defineStore('cart', () => {
-  // list of items added to the cart
   const items = reactive<CartItem[]>([])
 
   const total = computed(() => {
@@ -24,7 +23,6 @@ export const useCartStore = defineStore('cart', () => {
       items.push(item)
     }
   }
-
   return {
     items,
     total,

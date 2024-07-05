@@ -1,5 +1,5 @@
 <script setup>
-import Cart from "./Cart.vue";
+import Cart from './Cart.vue'
 </script>
 
 <template>
@@ -10,7 +10,7 @@ import Cart from "./Cart.vue";
     <router-link :to="{ name: 'contact' }">Contact</router-link>
     <router-link :to="{ name: 'login' }">Login</router-link>
   </nav>
-  <!-- <Cart /> -->
+  <Cart />
 </template>
 
 <style scoped>

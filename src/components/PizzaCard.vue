@@ -1,15 +1,26 @@
 <script setup lang="ts">
-import type { Pizza } from "../types/Pizza";
-import type { PropType } from "vue";
+import type { Pizza } from '../types/Pizza'
+import type { PropType } from 'vue'
+import { computed, onUpdated } from 'vue'
+import { useCartStore } from '../stores/cart'
+
+const cart = useCartStore()
+
+function addToCart() {
+  cart.add({ id: props.pizza.id, quantity: 1 })
+}
 
 const props = defineProps({
   pizza: {
     type: Object as PropType<Pizza>,
-    required: true,
-  },
-});
+    required: true
+  }
+})
+
+const isInCart = computed((): boolean => {
+  return !!cart.items.find((item) => item.id === props.pizza.id)
+})
 </script>
-console.log(props)
 
 <template>
   <article class="pizza--details-wrapper">
@@ -17,9 +28,11 @@ console.log(props)
     <p>{{ pizza.title }}</p>
     <p>{{ pizza.description }}</p>
     <div class="pizza--inventory">
-      <div class="pizza--inventory-stock">Stock: {{ pizza.quantity || 0 }}</div>
+      <!-- <div class="pizza--inventory-stock">Stock: {{ pizza.quantity || 0 }}</div> -->
       <div class="pizza--inventory-price">$ {{ pizza.price }}</div>
+      <span v-if="isInCart">In cart</span>
     </div>
+    <button class="pizza--add" @click.prevent="addToCart">Add to cart</button>
   </article>
 </template>
 
@@ -46,4 +59,13 @@ img {
   align-items: center;
   width: 100%;
 }
+
+.pizza--add {
+  margin-bottom: 5px;
+  cursor: pointer;
+}
 </style>
+
+<!-- prevent 
+;
+-->
