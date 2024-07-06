@@ -1,5 +1,6 @@
-import { defineStore } from 'pinia'
 import { reactive, computed } from 'vue'
+import { defineStore } from 'pinia'
+
 import { usePizzasStore } from './pizzas'
 
 type CartItem = {

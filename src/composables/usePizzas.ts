@@ -1,5 +1,5 @@
-import type { Pizza } from '../types/Pizza'
 import { ref, type Ref } from 'vue'
+import type { Pizza } from '../types/Pizza'
 
 export function usePizzas(): { pizzas: Ref<Pizza[]> } {
   return {

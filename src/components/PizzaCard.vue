@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { computed, onUpdated, type PropType } from 'vue'
+
 import type { Pizza } from '../types/Pizza'
-import type { PropType } from 'vue'
-import { computed, onUpdated } from 'vue'
 import { useCartStore } from '../stores/cart'
 
 const cart = useCartStore()
